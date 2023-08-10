@@ -2,6 +2,8 @@ package com.cybage.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.cybage.exception.ConfNotFoundException;
 import com.cybage.model.Conference;
 import com.cybage.repository.ConferenceRepository;
 
@@ -22,6 +24,8 @@ import com.cybage.repository.ConferenceRepository;
 	}
     @Override
 	public Conference getConferenceById(Integer id) {
+    	if(conferenceRepo.findById(id).isEmpty())
+    	throw new ConfNotFoundException("Requested Conference does not exist");
 		return conferenceRepo.findById(id).get();
 	}
     @Override

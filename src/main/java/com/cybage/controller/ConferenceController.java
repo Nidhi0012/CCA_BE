@@ -1,5 +1,8 @@
 package com.cybage.controller;
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,7 @@ import com.cybage.service.ConferenceService;
 
 @CrossOrigin
 @RestController
+
 @RequestMapping("/api")
     public class ConferenceController {
 	
@@ -23,11 +27,11 @@ import com.cybage.service.ConferenceService;
 	private ConferenceService conferenceService;
 	
 	@PostMapping("/saveConference")
-	public ResponseEntity<Conference> saveConference(@RequestBody Conference conference)
+	public ResponseEntity<Conference> saveConference( @Valid @RequestBody Conference conference)
 	{
 		return new ResponseEntity<Conference>(conferenceService.saveConference(conference),HttpStatus.CREATED);
 	}
-	
+	  
 	@GetMapping("/")
 	public ResponseEntity<List<Conference>> getAllConference()
 	{
@@ -47,10 +51,11 @@ import com.cybage.service.ConferenceService;
 	}
 	
 	@PutMapping("/conferences/edit/{id}")
-	public ResponseEntity<Conference> editConference(@RequestBody Conference conference, @PathVariable Integer id)
+	public ResponseEntity<Conference> editConference( @Valid @RequestBody Conference conference, @PathVariable Integer id)
 	{
 		return new ResponseEntity<Conference>(conferenceService.editConference(conference,id),HttpStatus.CREATED);
-	}}
+	}
+	}
 	
 	
 	

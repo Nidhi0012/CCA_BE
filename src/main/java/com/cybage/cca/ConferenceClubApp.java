@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
    public class ConferenceClubApp{
    public static void main(String[] args) {
    SpringApplication.run(ConferenceClubApp.class, args);
-	}}
+}}
    
 
 
