@@ -5,14 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import com.sun.istack.NotNull;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,8 +35,8 @@ import lombok.Setter;
     private Date date;
     
     @NotEmpty
-    @Size(min = 2, max = 40, message="Name should be minimum of 2 characters without any special character")
-	@Pattern(regexp = "[A-Za-z/s]+")
+    @Size(min = 2, max = 40, message="Name should be minimum of 2 characters")
+    @Pattern(regexp = "^[a-zA-Z0-9_. -]+$")
 	private String name;
     
 	@NotEmpty
@@ -49,6 +44,8 @@ import lombok.Setter;
     
     
     @NotEmpty
-    @Pattern(regexp = "(https:\\/\\/www\\.|http:\\/\\/www\\.|https:\\/\\/|http:\\/\\/)?[a-zA-Z0-9]{2,}(\\.[a-zA-Z0-9]{2,})(\\.[a-zA-Z0-9]{2,})?", message="Enter a valid link")
+    @Pattern(regexp = "(https:\\/\\/www\\.|http:\\/\\/www\\.|https:\\/\\/|http:\\/\\/)?[a-zA-Z0-9]{2,}(\\.[a-zA-Z0-9]{2,})(\\.[a-zA-Z0-9]{2,})?", message="Enter a valid Link")
 	private String link;
-}
+    
+   
+ }

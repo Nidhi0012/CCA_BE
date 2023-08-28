@@ -2,11 +2,14 @@ package com.cybage.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import com.cybage.exception.ConfNotFoundException;
 import com.cybage.model.Conference;
 import com.cybage.repository.ConferenceRepository;
-
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.ResponseEntity;
+   
    @Service
    public class ConferenceServiceImpl implements ConferenceService{
 	
@@ -19,15 +22,17 @@ import com.cybage.repository.ConferenceRepository;
 	}
 
 	@Override
-	public List<Conference> getAllConference() {
-		return conferenceRepo.findAll();
+    public List<Conference> getAllConference(@RequestParam String field) {
+		return conferenceRepo.findAll(Sort.by(Direction.ASC,field));
 	}
-    @Override
+    
+	@Override
 	public Conference getConferenceById(Integer id) {
     	if(conferenceRepo.findById(id).isEmpty())
     	throw new ConfNotFoundException("Requested Conference does not exist");
 		return conferenceRepo.findById(id).get();
 	}
+	
     @Override
 	public String deleteConference(Integer id) {
 	Conference conference =	conferenceRepo.findById(id).get();
@@ -49,7 +54,27 @@ import com.cybage.repository.ConferenceRepository;
 	oldConference.setStatus(c.getStatus());
 	oldConference.setLink(c.getLink());
 	return conferenceRepo.save(oldConference);
-	}}
+	}
+
+	@Override
+	public ResponseEntity<List<Conference>> findAll(Sort by) {
+		return null;
+	}
+
+	public List<Conference> getAllConference() {
+		
+		return null;
+	}
+    }
+	
+	
+
+	
+	
+    
+	
+    
+   
 
 	
 

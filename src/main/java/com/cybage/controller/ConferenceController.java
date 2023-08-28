@@ -1,9 +1,9 @@
 package com.cybage.controller;
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.cybage.model.Conference;
 import com.cybage.service.ConferenceService;
+
 
 @CrossOrigin
 @RestController
@@ -23,26 +25,40 @@ import com.cybage.service.ConferenceService;
 @RequestMapping("/api")
     public class ConferenceController {
 	
+	
 	@Autowired
 	private ConferenceService conferenceService;
 	
 	@PostMapping("/saveConference")
-	public ResponseEntity<Conference> saveConference( @Valid @RequestBody Conference conference)
+	public ResponseEntity<Conference> saveConference( @Valid @RequestBody Conference conference )
+	
 	{
 		return new ResponseEntity<Conference>(conferenceService.saveConference(conference),HttpStatus.CREATED);
 	}
 	  
 	@GetMapping("/")
-	public ResponseEntity<List<Conference>> getAllConference()
+	public ResponseEntity<List<Conference>> getAllConference(String String)
+
 	{
-		return new ResponseEntity<List<Conference>>(conferenceService.getAllConference(),HttpStatus.OK);
+		
+		return new ResponseEntity<List<Conference>>(conferenceService.getAllConference(String),HttpStatus.OK);
 	}
+	
+//	@GetMapping("/")
+//	public ResponseEntity<List<Conference>> getAllConference(
+//
+//			@RequestParam(value="field",required=false) String field)
+//	{
+//		
+//		return conferenceService.findAll(Sort.by(Direction.ASC, field));
+//	}
 	
 	@GetMapping("/{id}")   
 	public ResponseEntity<Conference>getConferenceById(@PathVariable Integer id)
 	{
 		return new ResponseEntity<Conference>(conferenceService.getConferenceById(id),HttpStatus.OK);
 	}
+	
 	@GetMapping("/conferences/delete/{id}")
 	public ResponseEntity<String> deleteConference(@PathVariable Integer id)
 	{
