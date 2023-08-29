@@ -36,13 +36,13 @@ import com.cybage.service.ConferenceService;
 		return new ResponseEntity<Conference>(conferenceService.saveConference(conference),HttpStatus.CREATED);
 	}
 	  
-	@GetMapping("/")
-	public ResponseEntity<List<Conference>> getAllConference(String String)
-
-	{
-		
-		return new ResponseEntity<List<Conference>>(conferenceService.getAllConference(String),HttpStatus.OK);
-	}
+//	@GetMapping("/")
+//	public ResponseEntity<List<Conference>> getAllConference(String String)
+//
+//	{
+//		
+//		return new ResponseEntity<List<Conference>>(conferenceService.getAllConference(String),HttpStatus.OK);
+//	}
 	
 //	@GetMapping("/")
 //	public ResponseEntity<List<Conference>> getAllConference(
@@ -52,6 +52,16 @@ import com.cybage.service.ConferenceService;
 //		
 //		return conferenceService.findAll(Sort.by(Direction.ASC, field));
 //	}
+	
+	 @GetMapping
+	    public List<Conference> getAllConference(@RequestParam(required = false) String field) {
+	        if (field != null && !field.isEmpty()) {
+	            return conferenceService.getAllConference(field);
+	        } else {
+	            return conferenceService.getAllConference(field);
+	        }
+	    }
+
 	
 	@GetMapping("/{id}")   
 	public ResponseEntity<Conference>getConferenceById(@PathVariable Integer id)

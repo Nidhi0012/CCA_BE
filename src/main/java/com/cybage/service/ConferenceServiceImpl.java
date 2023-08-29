@@ -21,10 +21,17 @@ import org.springframework.http.ResponseEntity;
 		return conferenceRepo.save(conference);
 	}
 
-	@Override
-    public List<Conference> getAllConference(@RequestParam String field) {
-		return conferenceRepo.findAll(Sort.by(Direction.ASC,field));
-	}
+//	@Override
+//    public List<Conference> getAllConference(@RequestParam String field) {
+//		return conferenceRepo.findAll(Sort.by(Direction.ASC,field));
+//	}
+	
+	 @Override
+	    public List<Conference> getAllConference(String field) {
+	        // Check if the field parameter is "date" for sorting by date
+	        Sort sort = field.equals("date") ? Sort.by(Direction.ASC, field) : null;
+	        return conferenceRepo.findAll(sort);
+	    }
     
 	@Override
 	public Conference getConferenceById(Integer id) {
