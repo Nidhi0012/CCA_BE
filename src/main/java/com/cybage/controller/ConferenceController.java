@@ -2,8 +2,6 @@ package com.cybage.controller;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -43,15 +41,7 @@ import com.cybage.service.ConferenceService;
 //		
 //		return new ResponseEntity<List<Conference>>(conferenceService.getAllConference(String),HttpStatus.OK);
 //	}
-	
-//	@GetMapping("/")
-//	public ResponseEntity<List<Conference>> getAllConference(
-//
-//			@RequestParam(value="field",required=false) String field)
-//	{
-//		
-//		return conferenceService.findAll(Sort.by(Direction.ASC, field));
-//	}
+
 	
 	 @GetMapping
 	    public List<Conference> getAllConference(@RequestParam(required = false) String field) {
@@ -60,7 +50,7 @@ import com.cybage.service.ConferenceService;
 	        } else {
 	            return conferenceService.getAllConference(field);
 	        }
-	    }
+	        }
 
 	
 	@GetMapping("/{id}")   

@@ -9,7 +9,6 @@ import com.cybage.model.Conference;
    public Conference saveConference(Conference conference);
    
    public List<Conference> getAllConference(String field);
-// List<Conference> getAllConference(String field);
 
    public Conference getConferenceById(Integer id );
   
