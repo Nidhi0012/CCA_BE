@@ -19,15 +19,10 @@ import org.springframework.http.ResponseEntity;
 	public Conference saveConference(Conference conference) {
 		return conferenceRepo.save(conference);
 	}
-
-//	@Override
-//    public List<Conference> getAllConference(@RequestParam String field) {
-//		return conferenceRepo.findAll(Sort.by(Direction.ASC,field));
-//	}
 	
-	 @Override
+	@Override
 	    public List<Conference> getAllConference(String field) {
-	        Sort sort = field.equals("date") ? Sort.by(Direction.ASC, field) : null;
+	        Sort sort = field.equals("date") ? Sort.by(Direction.DESC, field) : null;
 	        return conferenceRepo.findAll(sort);
 	    }
     
@@ -67,8 +62,13 @@ import org.springframework.http.ResponseEntity;
 	}
 
 	public List<Conference> getAllConference() {
-		
 		return null;
+	}
+
+	@Override
+	public List<Conference> getConferenceByStatus(String status) {
+		
+		return conferenceRepo.findByStatus(status);
 	}
     }
 	

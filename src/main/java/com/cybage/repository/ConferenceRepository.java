@@ -8,7 +8,7 @@ import com.cybage.model.Conference;
 @Repository
 public interface ConferenceRepository extends JpaRepository<Conference, Integer>
 {
-	
+	List<Conference> findByStatus(String status);
 }
 
 

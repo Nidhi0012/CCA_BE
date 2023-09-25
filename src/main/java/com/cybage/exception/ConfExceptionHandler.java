@@ -1,8 +1,6 @@
 package com.cybage.exception;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -27,8 +25,6 @@ public class ConfExceptionHandler {
 	return new ResponseEntity<>(confException, HttpStatus.NOT_FOUND);
 	}
 	
-	
-	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex)
 	{
@@ -41,7 +37,7 @@ public class ConfExceptionHandler {
 		
 		return new ResponseEntity<Map<String,String>>(resp,HttpStatus.BAD_REQUEST);
 		
-	}
+	}}
 	
 
-}
+

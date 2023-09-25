@@ -18,7 +18,7 @@ import com.cybage.model.Conference;
 
    public ResponseEntity<List<Conference>> findAll(Sort by);
 
-   
+   public List<Conference> getConferenceByStatus(String status);
 
 
    

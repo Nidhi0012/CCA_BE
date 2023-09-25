@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,29 +29,25 @@ import com.cybage.service.ConferenceService;
 	private ConferenceService conferenceService;
 	
 	@PostMapping("/saveConference")
-	public ResponseEntity<Conference> saveConference( @Valid @RequestBody Conference conference )
+	public ResponseEntity<Conference> saveConference(@Valid @RequestBody Conference conference )
 	
 	{
 		return new ResponseEntity<Conference>(conferenceService.saveConference(conference),HttpStatus.CREATED);
 	}
-	  
-//	@GetMapping("/")
-//	public ResponseEntity<List<Conference>> getAllConference(String String)
-//
-//	{
-//		
-//		return new ResponseEntity<List<Conference>>(conferenceService.getAllConference(String),HttpStatus.OK);
-//	}
-
 	
-	 @GetMapping
-	    public List<Conference> getAllConference(@RequestParam(required = false) String field) {
-	        if (field != null && !field.isEmpty()) {
-	            return conferenceService.getAllConference(field);
-	        } else {
-	            return conferenceService.getAllConference(field);
-	        }
-	        }
+	@GetMapping("/")
+    public List<Conference> getAllConference(@RequestParam(required = false) String field) {
+        if (field != null && !field.isEmpty()) {
+            return conferenceService.getAllConference(field);
+        } else {
+            throw new IllegalArgumentException("The 'field' parameter is required.");
+        }
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return new ResponseEntity<String>("Bad Request: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 
 	
 	@GetMapping("/{id}")   
@@ -71,7 +68,12 @@ import com.cybage.service.ConferenceService;
 	{
 		return new ResponseEntity<Conference>(conferenceService.editConference(conference,id),HttpStatus.CREATED);
 	}
-	}
+	
+	@GetMapping("/filterBy/{status}")
+	public ResponseEntity<List<Conference>>getConferenceByStatus(@PathVariable String status)
+	{
+		return new ResponseEntity<List<Conference>>(conferenceService.getConferenceByStatus(status),HttpStatus.OK);
+	}}
 	
 	
 	
