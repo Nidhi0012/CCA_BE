@@ -1,5 +1,7 @@
 package com.cybage.controller;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,20 +22,27 @@ import com.cybage.service.ConferenceService;
 
 @CrossOrigin
 @RestController
-
 @RequestMapping("/api")
     public class ConferenceController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(ConferenceController.class);	
 	
 	@Autowired
 	private ConferenceService conferenceService;
 	
-	@PostMapping("/saveConference")
-	public ResponseEntity<Conference> saveConference(@Valid @RequestBody Conference conference )
 	
-	{
-		return new ResponseEntity<Conference>(conferenceService.saveConference(conference),HttpStatus.CREATED);
+	@PostMapping("/saveConference")
+	public ResponseEntity<Conference> saveConference(@Valid @RequestBody Conference conference) {
+	    
+		logger.info("Saving conference: {}", conference.getName());
+	    try {
+	        return new ResponseEntity<>(conferenceService.saveConference(conference), HttpStatus.CREATED);
+	    } catch (Exception e) {
+	        logger.error("Error saving conference: {}", e.getMessage());
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
 	}
+	
 	
 	@GetMapping("/")
     public List<Conference> getAllConference(@RequestParam(required = false) String field) {
@@ -57,16 +66,29 @@ import com.cybage.service.ConferenceService;
 	}
 	
 	@GetMapping("/conferences/delete/{id}")
-	public ResponseEntity<String> deleteConference(@PathVariable Integer id)
-	{
-		
-		return new ResponseEntity<String>(conferenceService.deleteConference(id),HttpStatus.OK);
+	public ResponseEntity<String> deleteConference(@PathVariable Integer id) {
+	    
+		logger.info("Deleting conference with ID: {}", id);
+	    
+	    try {
+	        String result = conferenceService.deleteConference(id);
+	        return new ResponseEntity<String>(result, HttpStatus.OK);
+	    } catch (Exception e) {
+	        logger.error("Error deleting conference: {}", e.getMessage());
+	        return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
 	}
 	
 	@PutMapping("/conferences/edit/{id}")
-	public ResponseEntity<Conference> editConference( @Valid @RequestBody Conference conference, @PathVariable Integer id)
-	{
-		return new ResponseEntity<Conference>(conferenceService.editConference(conference,id),HttpStatus.CREATED);
+	public ResponseEntity<Conference> editConference(@Valid @RequestBody Conference conference, @PathVariable Integer id) {
+	    logger.info("Editing conference with ID: {}", id);
+	    
+	    try {
+	        return new ResponseEntity<Conference>(conferenceService.editConference(conference, id), HttpStatus.CREATED);
+	    } catch (Exception e) {
+	        logger.error("Error editing conference: {}", e.getMessage());
+	        return new ResponseEntity<Conference>(HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
 	}
 	
 	@GetMapping("/filterBy/{status}")

@@ -1,10 +1,13 @@
 package com.cybage.service;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cybage.exception.ConfNotFoundException;
 import com.cybage.model.Conference;
 import com.cybage.repository.ConferenceRepository;
+import com.cybage.service.ConferenceService;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
@@ -70,7 +73,9 @@ import org.springframework.http.ResponseEntity;
 		
 		return conferenceRepo.findByStatus(status);
 	}
-    }
+
+	public void setConferenceRepo(ConferenceRepository conferenceRepo2) {
+	}}
 	
 	
 
