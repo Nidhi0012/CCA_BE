@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cybage.model.Conference;
 import com.cybage.service.ConferenceService;
 
-
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
@@ -32,6 +31,7 @@ import com.cybage.service.ConferenceService;
 	
 	
 	@PostMapping("/saveConference")
+	 
 	public ResponseEntity<Conference> saveConference(@Valid @RequestBody Conference conference) {
 	    
 		logger.info("Saving conference: {}", conference.getName());
