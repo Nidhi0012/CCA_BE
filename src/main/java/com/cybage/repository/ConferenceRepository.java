@@ -9,6 +9,10 @@ import com.cybage.model.Conference;
 public interface ConferenceRepository extends JpaRepository<Conference, Integer>
 {
 	List<Conference> findByStatus(String status);
+
+	List<Conference> findByName(String name);
+
+	List<Conference> findByDate(Date date);
 }
 
 

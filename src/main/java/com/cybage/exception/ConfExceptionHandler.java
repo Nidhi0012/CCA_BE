@@ -37,7 +37,21 @@ public class ConfExceptionHandler {
 		
 		return new ResponseEntity<Map<String,String>>(resp,HttpStatus.BAD_REQUEST);
 		
-	}}
+	}
+	
+	@ExceptionHandler(value = { CustomConfException.class })
+	public ResponseEntity<Object> handleCustomConfException(CustomConfException customConfException) {
+	    ConfException confException = new ConfException(
+	        customConfException.getMessage(),
+	        customConfException.getCause(),
+	        HttpStatus.BAD_REQUEST
+	    );
+
+	    return new ResponseEntity<>(confException, HttpStatus.BAD_REQUEST);
+	}
+
+	
+}
 	
 
 

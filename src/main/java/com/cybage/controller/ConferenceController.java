@@ -1,5 +1,6 @@
 package com.cybage.controller;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.validation.Valid;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.cybage.model.Conference;
 import com.cybage.service.ConferenceService;
+import com.cybage.exception.CustomConfException;
+import com.cybage.exception.CustomDuplicateConferenceException;
+
 
 @CrossOrigin
 @RestController
@@ -31,9 +35,15 @@ import com.cybage.service.ConferenceService;
 	
 	
 	@PostMapping("/saveConference")
-	 
 	public ResponseEntity<Conference> saveConference(@Valid @RequestBody Conference conference) {
-	    
+	    if (conference.getName().length() < 2) {
+	        throw new CustomConfException("Conference name is too short.");
+	    }
+
+	    if (conferenceService.isDuplicateConference(conference)) {
+	        throw new CustomDuplicateConferenceException("Conference with the same name or date already exists.");
+	    }
+      
 		logger.info("Saving conference: {}", conference.getName());
 	    try {
 	        return new ResponseEntity<>(conferenceService.saveConference(conference), HttpStatus.CREATED);

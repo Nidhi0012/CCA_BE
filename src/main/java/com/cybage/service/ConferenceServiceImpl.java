@@ -75,7 +75,28 @@ import org.springframework.http.ResponseEntity;
 	}
 
 	public void setConferenceRepo(ConferenceRepository conferenceRepo2) {
-	}}
+	}
+	
+
+    @Override
+    public boolean isDuplicateConference(Conference conference) {
+
+        List<Conference> conferencesWithSameName = conferenceRepo.findByName(conference.getName());
+        if (!conferencesWithSameName.isEmpty()) {
+            return true; 
+        }
+
+        List<Conference> conferencesWithSameDate = conferenceRepo.findByDate(conference.getDate());
+        if (!conferencesWithSameDate.isEmpty()) {
+            return true; 
+        }
+
+        return false; 
+    }
+}
+	
+   
+   
 	
 	
 

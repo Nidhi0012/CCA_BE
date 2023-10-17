@@ -1,5 +1,8 @@
 package com.cybage.service;
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import com.cybage.model.Conference;
@@ -19,6 +22,8 @@ import com.cybage.model.Conference;
    public ResponseEntity<List<Conference>> findAll(Sort by);
 
    public List<Conference> getConferenceByStatus(String status);
+
+public boolean isDuplicateConference(@Valid Conference conference);
 
 
    
