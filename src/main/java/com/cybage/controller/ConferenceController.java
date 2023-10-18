@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.cybage.model.Conference;
 import com.cybage.service.ConferenceService;
-import com.cybage.exception.CustomConfException;
 import com.cybage.exception.CustomDuplicateConferenceException;
 
 
@@ -36,10 +35,6 @@ import com.cybage.exception.CustomDuplicateConferenceException;
 	
 	@PostMapping("/saveConference")
 	public ResponseEntity<Conference> saveConference(@Valid @RequestBody Conference conference) {
-	    if (conference.getName().length() < 2) {
-	        throw new CustomConfException("Conference name is too short.");
-	    }
-
 	    if (conferenceService.isDuplicateConference(conference)) {
 	        throw new CustomDuplicateConferenceException("Conference with the same name or date already exists.");
 	    }
