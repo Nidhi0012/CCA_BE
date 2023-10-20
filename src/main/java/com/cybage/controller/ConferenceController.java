@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.cybage.model.Conference;
 import com.cybage.service.ConferenceService;
+
+import io.swagger.v3.oas.annotations.Operation;
+
 import com.cybage.exception.CustomDuplicateConferenceException;
 
 
@@ -32,7 +35,7 @@ import com.cybage.exception.CustomDuplicateConferenceException;
 	@Autowired
 	private ConferenceService conferenceService;
 	
-	
+    @Operation(summary = "Add a conference", description = "Add a new conference to the system.")
 	@PostMapping("/saveConference")
 	public ResponseEntity<Conference> saveConference(@Valid @RequestBody Conference conference) {
 	    if (conferenceService.isDuplicateConference(conference)) {
@@ -48,7 +51,7 @@ import com.cybage.exception.CustomDuplicateConferenceException;
 	    }
 	}
 	
-	
+    @Operation(summary = "Get all conference list", description = "Get a list of all conferences in the system.")
 	@GetMapping("/")
     public List<Conference> getAllConference(@RequestParam(required = false) String field) {
         if (field != null && !field.isEmpty()) {
@@ -63,13 +66,14 @@ import com.cybage.exception.CustomDuplicateConferenceException;
         return new ResponseEntity<String>("Bad Request: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-	
-	@GetMapping("/{id}")   
+    @Operation(summary = "Get a conference by its id", description = "Retrieve a conference by its unique identifier.")
+    @GetMapping("/{id}")   
 	public ResponseEntity<Conference>getConferenceById(@PathVariable Integer id)
 	{
 		return new ResponseEntity<Conference>(conferenceService.getConferenceById(id),HttpStatus.OK);
 	}
 	
+    @Operation(summary = "Delete a conference by its id", description = "Delete a conference by its unique identifier.")
 	@GetMapping("/conferences/delete/{id}")
 	public ResponseEntity<String> deleteConference(@PathVariable Integer id) {
 	    
@@ -84,7 +88,8 @@ import com.cybage.exception.CustomDuplicateConferenceException;
 	    }
 	}
 	
-	@PutMapping("/conferences/edit/{id}")
+    @Operation(summary = "Edit a conference by its id", description = "Edit a conference by its unique identifier.")
+    @PutMapping("/conferences/edit/{id}")
 	public ResponseEntity<Conference> editConference(@Valid @RequestBody Conference conference, @PathVariable Integer id) {
 	    logger.info("Editing conference with ID: {}", id);
 	    
@@ -96,7 +101,8 @@ import com.cybage.exception.CustomDuplicateConferenceException;
 	    }
 	}
 	
-	@GetMapping("/filterBy/{status}")
+    @Operation(summary = "Get conferences by status", description = "Get a list of conferences filtered by status.")
+    @GetMapping("/filterBy/{status}")
 	public ResponseEntity<List<Conference>>getConferenceByStatus(@PathVariable String status)
 	{
 		return new ResponseEntity<List<Conference>>(conferenceService.getConferenceByStatus(status),HttpStatus.OK);
