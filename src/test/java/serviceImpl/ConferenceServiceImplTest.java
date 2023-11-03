@@ -2,9 +2,11 @@ package serviceImpl;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,6 @@ import com.cybage.model.Conference;
 import com.cybage.repository.ConferenceRepository;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-
 import com.cybage.service.ConferenceServiceImpl;
 
 @ActiveProfiles("test")
@@ -82,7 +83,7 @@ public class ConferenceServiceImplTest {
         Integer id = 1;
         Conference conference = new Conference();
         when(conferenceRepo.findById(id)).thenReturn(Optional.of(conference));
-        
+
         doNothing().when(conferenceRepo).delete(conference);
 
         String result = conferenceService.deleteConference(id);
@@ -91,16 +92,15 @@ public class ConferenceServiceImplTest {
         verify(conferenceRepo, times(1)).delete(conference);
     }
 
-    
     @Test
     public void testEditConference() {
         Integer id = 1;
         Conference existingConference = new Conference();
-        existingConference.setConferenceId(id); 
+        existingConference.setConferenceId(id);
         existingConference.setName("Old Name");
 
         Conference updatedConference = new Conference();
-        updatedConference.setConferenceId(id); 
+        updatedConference.setConferenceId(id);
         updatedConference.setName("New Name");
 
         when(conferenceRepo.findById(id)).thenReturn(Optional.of(existingConference));
@@ -110,6 +110,4 @@ public class ConferenceServiceImplTest {
 
         assertEquals("New Name", result.getName());
     }
-
-    
 }

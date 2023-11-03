@@ -23,7 +23,7 @@ import com.cybage.model.Conference;
 
    public List<Conference> getConferenceByStatus(String status);
 
-public boolean isDuplicateConference(@Valid Conference conference);
+   public boolean isDuplicateConference(@Valid Conference conference);
 
 
    
