@@ -20,13 +20,14 @@ public class SwaggerConfig {
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("com.cybage.controller")).paths(PathSelectors.any()).build();
 	}
-	private ApiInfo apiInfo() {
+	
+	private ApiInfo apiInfo() { 
         return new ApiInfo(
             "Conference Club API",
             "API documentation for the Conference Club application",
             "1.0",
             "Terms of service",
-            "Your Name",
+            "Conference Club application",
             "License",
             "License URL" );
     }
