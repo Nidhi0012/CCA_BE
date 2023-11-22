@@ -31,10 +31,10 @@ public class ConferenceController {
       
         logger.info("Saving conference: {}", conference.getName());
         try {
-            return new ResponseEntity<>(conferenceService.saveConference(conference), HttpStatus.CREATED);
+            return new ResponseEntity<Conference>(conferenceService.saveConference(conference), HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error("Error saving conference: {}", e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Conference>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 	

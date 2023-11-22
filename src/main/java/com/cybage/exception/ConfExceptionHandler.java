@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ConfExceptionHandler {
 
     @ExceptionHandler(value = {ConfNotFoundException.class})
-    public ResponseEntity<Object> handleConfNotFoundException(ConfNotFoundException confNotFoundException) {
+    public ResponseEntity<ConfException> handleConfNotFoundException(ConfNotFoundException confNotFoundException) {
         ConfException confException = new ConfException(
             confNotFoundException.getMessage(),
             confNotFoundException.getCause(),
             HttpStatus.NOT_FOUND
         );
-        return new ResponseEntity<>(confException, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<ConfException>(confException, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        Map<String, String> resp = new HashMap<>();
+        Map<String, String> resp = new HashMap<String, String>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String message = error.getDefaultMessage();
