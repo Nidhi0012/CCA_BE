@@ -16,8 +16,7 @@ public class ConfExceptionHandler {
     public ResponseEntity<ConfException> handleConfNotFoundException(ConfNotFoundException confNotFoundException) {
         ConfException confException = new ConfException(
             confNotFoundException.getMessage(),
-            confNotFoundException.getCause(),
-            HttpStatus.NOT_FOUND
+            confNotFoundException.getCause(), null 
         );
         return new ResponseEntity<ConfException>(confException, HttpStatus.NOT_FOUND);
     }

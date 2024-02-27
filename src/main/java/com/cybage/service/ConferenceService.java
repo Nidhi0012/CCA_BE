@@ -1,11 +1,13 @@
-package com.cybage.service;
-import java.util.List;
+   package com.cybage.service;
+   import java.util.List;
 
-import javax.validation.Valid;
+  import javax.validation.Valid;
 
-import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
-import com.cybage.model.Conference;
+  import org.springframework.data.domain.Page;
+  import org.springframework.data.domain.Pageable;
+  import org.springframework.data.domain.Sort;
+  import org.springframework.http.ResponseEntity;
+  import com.cybage.model.Conference;
 
    public interface ConferenceService {
    
@@ -25,8 +27,9 @@ import com.cybage.model.Conference;
 
    public boolean isDuplicateConference(@Valid Conference conference);
 
+   public Page<Conference> getAllConference(String field, Pageable pageable);
 
-   
+   public List<Conference> getAllConferenceByField(String field);
 
 
  
